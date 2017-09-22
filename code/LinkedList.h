@@ -1,3 +1,5 @@
+// Aaron Baker
+
 // LinkedList.h
 
 // tom bailey   0740  5 oct 2010
@@ -15,7 +17,7 @@
 #include <iostream>
 using std::ostream;
 
-#include "Node.cpp"
+#include "Node.h"
 
 #define ulong unsigned long
 
@@ -54,12 +56,20 @@ public:
 	//         outfile.
 	void print(ostream & outfile) const;
 
+	//post: the int in this List is the returned size of the LinkedList
+	int size() const;
+
+	//post: the double is the total sum of the items in the LinkedList
+	double sum() const;
 
 	//*** Mutators ***
 
 	// post: x has been added as the first double in this
 	//         List.
 	void insertAsFirst(double x);
+
+	//post: x has been added as the last double in this list
+	void insertAsLast(double x);
 
 	// pre:  this List is not empty.
 	// post: the first double in this List has been removed

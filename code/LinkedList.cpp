@@ -1,130 +1,116 @@
-// LinkedList.cpp
+// Aaron Baker
 
-// tom bailey   0745  5 oct 2010
-// Definition of methods for the List class.
+// ListProcessor.cpp
+
+// tom bailey   1540  30 sep 2011
+
+// tom bailey   1030  27 jan 2012
+// Exercise the List class with verbose Node constructor
+//   and destructor.
 
 #include "LinkedList.h"
 
-#include <utility>
 
-
-List::List()
-	: first_(NULL)
+int main()
 {
+	List cows;
+
+	cout << "------------------------" << endl;
+	cout << "cows list  :  " << cows << endl;
+	cout << endl << "Adding elements to Cows" << endl;
+	cout << "-----" << endl;
+	cows.insertAsFirst(1.23);
+	cows.insertAsFirst(2.34);
+	cout << "Cows Count: " << cows.size() << "\t\tSum: " << cows.sum() << endl;
+	cout << "Cows List Items :  " << cows << endl;
+	cout << "-----" << endl;
+
+	cout << endl << "Removing First Item From Cows List" << endl;
+	cout << "-----" << endl;
+	cows.removeFirst();
+	cout << "Cows List Items :  " << cows << "\tCount: " << cows.size() << "\t\tSum: " << cows.sum() << endl;
+	cout << "-----" << endl;
+
+
+	cout << endl << "Setting Horses List To Cows List" << endl;
+	cout << "-----" << endl;
+	List horses(cows);
+	cout << "Cows List :  " << cows << "\tCount: " << cows.size() << "\t\tSum: " << cows.sum() << endl;
+	cout << "Horses List :  " << horses << "\tCount: " << horses.size() << "\t\tSum: " << horses.sum() << endl;
+	cout << "-----" << endl;
+
+	cout << endl << "Removing Item From Horses List" << endl;
+	cout << "-----" << endl;
+	horses.removeFirst();
+	cout << "Horses Count: " << horses.size() << "\t\tSum: " << horses.sum() << endl;
+	cout << "-----" << endl;
+
+	cout << endl << "Inserting Item Into Horses List" << endl;
+	cout << "-----" << endl;
+	horses.insertAsFirst(5.67);
+	cout << "Horses List : " << horses << "\tCount: " << horses.size() << "\t\tSum: " << horses.sum() << endl;
+	cout << "-----" << endl;
+
+	cout << endl << "Inserting Item Into Cows List" << endl;
+	cout << "-----" << endl;
+	cows.insertAsFirst(6.78);
+	cout << "Cows List : " << cows << "\tCount: " << cows.size() << "\t\tSum: " << cows.sum() << endl;
+	cout << "-----" << endl;
+
+	List pigs;
+
+	cout << "Counts For Lists" << endl;
+	cout << "-----" << endl;
+	cout << "Cows List : " << cows << "\tCount: " << cows.size() << "\t\tSum: " << cows.sum() << endl;
+	cout << "Horses List : " << horses << "\tCount: " << horses.size() << "\t\tSum: " << horses.sum() << endl;
+	cout << "Pigs List : " << pigs << "\tCount: " << pigs.size() << "\t\tSum: " << pigs.sum() << endl;
+	cout << "-----" << endl;
+
+	cout << endl << "Setting Pigs List To Cows List" << endl;
+	cout << "-----" << endl;
+	pigs = cows;
+	cout << "-----" << endl;
+
+	cout << endl << "New Counts For Lists" << endl;
+	cout << "-----" << endl;
+	cout << "Cows List : " << cows << "\tCount: " << cows.size() << "\t\tSum: " << cows.sum() << endl;
+	cout << "Horse List : " << horses << "\tCount: " << horses.size() << "\t\tSum: " << horses.sum() << endl;
+	cout << "Pigs List : " << pigs << "\tCount: " << pigs.size() << "\t\tSum: " << pigs.sum() << endl;
+	cout << "-----" << endl;
+
+	cout << endl << "Setting Pigs List To Horses List" << endl;
+	cout << "-----" << endl;
+	pigs = horses;
+	cout << "-----" << endl;
+
+	cout << endl << "Adding Items To Cows List" << endl;
+	cout << "-----" << endl;
+	cows.insertAsLast(4.12);
+	cows.insertAsLast(8.012);
+	cout << "-----" << endl;
+
+	cout << endl << "Adding Items To Horses List" << endl;
+	cout << "-----" << endl;
+	horses.insertAsLast(9.28);
+	horses.insertAsLast(5.234);
+	horses.insertAsLast(0.782);
+	horses.insertAsLast(12.730);
+	cout << "-----" << endl;
+
+	List dogs;
+
+	cout << endl << "Created Empty List : Dogs\ndogs list : " << dogs <<  "\n-----\n\nAdding Items To Dogs List" << endl;
+	cout << "-----" << endl;
+	dogs.insertAsLast(7.32);
+	cout << "-----" << endl;
+
+	cout << endl << "New Counts For Lists" << endl;
+	cout << "-----" << endl;
+	cout << "Cows List :  " << cows << "\tCount: " << cows.size() << "\t\tSum: " << cows.sum() << endl;
+	cout << "Horses List :  " << horses << "\tCount: " << horses.size() << "\t\tSum: " << horses.sum() << endl;
+	cout << "Pigs List :  " << pigs << "\tCount: " << pigs.size() << "\t\tSum: " << pigs.sum() << endl;
+	cout << "Dogs List : " << dogs << "\tCount: " << dogs.size() << "\t\tSum: " << dogs.sum() << endl;
+	cout << "-----" << endl;
+	cout << endl << "Clean Up" << endl << endl;
+	return 0;
 }
-
-
-List::List(const List & other)
-	: first_(clone(other.first_))
-{
-}
-
-
-List::~List()
-{
-	while (!empty())
-	{
-		removeFirst();
-	}
-}
-
-
-const List & List::operator=(const List & other)
-{
-	// check for list = list
-	if (&other != this)
-	{
-		// clear the current contents of this List
-		this -> ~List();
-		// and get a copy of other
-		first_ = clone(other.first_);
-	}
-
-	return *this;
-}
-
-
-bool List::empty() const
-{
-	return first_ == NULL;
-}
-
-
-void List::insertAsFirst(double x)
-{
-	first_ = new Node(x, first_);
-}
-
-
-double List::removeFirst()
-{
-	double item = first_->entry_;
-	Node * tempPtr = first_;
-	first_ = first_->next_;
-	delete tempPtr;
-	return item;
-}
-
-
-void List::print(ostream & outfile) const
-{
-	outfile << "[ ";
-	if (!empty())
-	{
-		// The first entry is printed separately because no comma
-		// is needed.
-		outfile << first_->entry_;
-		Node * ptr = first_->next_;
-		while (ptr != NULL)
-		{
-			outfile << ", " << ptr->entry_;
-			ptr = ptr->next_;
-		}
-	}
-	outfile << " ]";
-}
-
-
-// Iterative version of clone.
-// This version walks down the linked structure making a
-//   new Node for each double in the structure.
-Node * List::clone(Node * ptr)
-{
-	if (ptr == NULL)
-	{
-		return NULL;
-	}
-	Node * first = new Node(ptr->entry_);
-	Node * last = first;
-	ptr = ptr->next_;
-	while (ptr != NULL)
-	{
-		last->next_ = new Node(ptr->entry_);
-		last = last->next_;
-		ptr = ptr->next_;
-	}
-	return first;
-}
-
-
-//// Recursive version of clone.
-//// This version handles two cases, a linked structure with
-////   no Nodes, and a linked structure with one or more
-////   Nodes.
-//Node * List::clone( Node * ptr )
-//{
-//   if( ptr == NULL )
-//   {
-//      return NULL;
-//   }
-//   return new Node( ptr->entry_, clone( ptr->next_ ) );
-//}
-
-
-ostream & operator<<(ostream & outfile, const List & list)
-{
-	list.print(outfile);
-	return outfile;
-}
-
-
